@@ -33,51 +33,78 @@ All `R` and `bash` scrips were developed/tested on:
 * `sparklyr 1.2`
 * `Gcloud SDK 289.0`
 
-## Setup
+## Dataset
 
-### 0. Register in Google Cloud Platform
+The data (~300 MB) can be download from [Gdrive](https://drive.google.com/drive/folders/14Y1rSDP0GG4GFy5gI6bbmTKI1gqnEUaK?usp=sharing).
+Make sure  to download the `.csv` files into the `data/` directory.
+
+## Prerequirements
+
+### 1. Register in Google Cloud Platform
 
 Register a new email (doesn't need to be gmail) in [Google Cloud Platform](https://console.cloud.google.com)
 to gain $300 worth of credit. Note that even though Gcloud grants credits at
 start, you will be asked to provide billing information before being able to
 make use of Gcloud services.
 
-### 1. Install Gcloud command-line tools
+### 2. Install Gcloud command-line tools
 
 To access gcloud commands in your local terminal, install Google Cloud SDK by
 following the [official instructions](https://cloud.google.com/sdk/docs).
 Make sure you run `gcloud init` at the  end of the installation process
 so that your machine gets authorized to manage your Gcloud account.
 
-### 2. Install the required R libraries
+## Setup
+
+### 0. Install the required R libraries
 
 The following command takes care for installing the user-specified libs:
 ```bash
-./install_r_libs.sh
+./0_install_r_libs.sh
 ```
 **NOTE**: If later on the projects depends on new libraries, make sure to
-add them to `install_r_libs.sh` as this file will also be used to install
+add them to `0_install_r_libs.sh` as this file will also be used to install
 libraries on the remote Gcloud server (Spark server).
 
-### 3. Setup a new Gcloud project and start a server (Spark server)
+### 1. Create a new Gcloud project
 
 To start working, it is necessary  to create a Gcloud project. This action
 only executed once (the provided `bash` script verifies if the project exist before
 trying to create it). Once a project is created, we can deploy a server:
 
 ```bash
-./setup_gcloud.sh
+./1_create_gcloud_project.sh
 ```
 
-**NOTE**: If idle for 1 hour, the server will automatically shutdown.
+**IMPORTANT**: Make sure to login to [Gcloud Console](https://console.cloud.google.com), navigate to the "Billing" panel and link the newly created project to the billing account that you created in step 1 of the [Pre-requirements](#prerequirements) section.
+
+### 2. Create a Gcloud Storage bucket and upload the dataset
+
+Create some storage for the dataset and project-related files:
+```bash
+./2_create_gcloud_storage.sh
+```
+
+### 3. Deploy a Gcloud Server (Spark Server)
+
+Start the server:
+```bash
+./3_deploy_gcloud_server.sh
+```
+
+**IMPORTANT**: If idle for 1 hour, the server will automatically shutdown.
 Run the above command again to re-deploy the server. The amount of idle time
-before shutdown is defined by `SHUTDOWN_AFTER` in `setup_gcloud.sh`.
+before shutdown is defined by `SHUTDOWN_AFTER` in `./3_deploy_gcloud_server.sh`.
 
-## Dataset
+## Submitting Jobs to Gcloud
 
-The data (~300 MB) can be download from [Gdrive](https://drive.google.com/drive/folders/14Y1rSDP0GG4GFy5gI6bbmTKI1gqnEUaK?usp=sharing).
-Make sure  to download the `.csv` files into the `data/` directory.
+The provided `bash` script will upload the content
+of the `src/` directory to `Gcloud Storage` and requests the server (Spark
+server) to execute it:
 
+```bash
+./4_submit_gcloud_job.sh
+```
 
 ## Development
 
@@ -105,7 +132,7 @@ The project also includes an example unittest for the
 unittest under the `scr/tests/` directory are passing, you can run:
 
 ```bash
-./run_tests.sh
+./0_run_uittests.sh
 ```
 
 **NOTE**: Although ideally every function should have a corresponding
@@ -114,27 +141,15 @@ If you add a new function `subroutines.R`, you can add its corresponding
 test to `test_subroutines.R` and run the above command to obtains
 the results.
 
-To learn more about unittesting in R checkout [André Müller's article in Towards Data Science](https://towardsdatascience.com/unit-testing-in-r-68ab9cc8d211).
-
-## Server Usage
-
-The provided `bash` script will upload the content
-of the `src/` directory to `Gcloud Storage` and requests the server (Spark
-server) to execute it:
-
-```bash
-./work_gcloud.sh
-```
-
 ## Useful Resources
 
 * `SparkR` [manual](https://rdrr.io/cran/SparkR/man/) and [code examples](https://github.com/apache/spark/tree/master/examples/src/main/r).
 * `sparklyr` on Rstudio [documentation](https://spark.rstudio.com/).
+* [Unittesting in R](https://towardsdatascience.com/unit-testing-in-r-68ab9cc8d211).
 
--------------------------------------------------------------------------------
 ## TODO
 
-1. Add Cloud SQL as source/destination of data and modidy the `R` code create
+1. Add `Cloud SQL` as source/destination of data and modidy the `R` code create
 Dataframes out of queries []
 2. Add cluster configurations when creating a `Spark` session in `R` to ensure
 high performance on the server side! []
