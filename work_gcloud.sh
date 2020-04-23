@@ -8,7 +8,7 @@
 ################################################################################
 
 # Declare Google Cloud Platform project specifications.
-PROJECT_ID=qfinforlife #myrproject # project name
+PROJECT_ID=rongcloud # project name
 REGION=europe-west1 # data center in Belgium
 
 # Copy source code to Gcloud Storage

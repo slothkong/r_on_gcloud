@@ -8,7 +8,7 @@
 ################################################################################
 
 # Declare Google Cloud Platform project specifications.
-PROJECT_ID=qfinforlife #myrproject # project name
+PROJECT_ID=rongcloud # project name
 REGION=europe-west1 # data center in Belgium
 WORKES=2 # number of nodes on the Gcloud Server (Spark Server workes)
 SHUTDOWN_AFTER=3600 # will shutdown if idle for SHUTDOWN_AFTER secs
