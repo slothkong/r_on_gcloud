@@ -134,9 +134,9 @@ server) to execute it:
 -------------------------------------------------------------------------------
 ## TODO
 
-[] Add Cloud SQL as source/destination of data and modidy the `R` code create 
-Dataframes out of queries.
-[] Add cluster configurations when creating a `Spark` session in `R` to ensure
-high performance on the server side!
-[] Add diagram of how this looks stack looks/operates.
-[] Add `bash` script to clean up Gcloud after the project on user command.
+1. Add Cloud SQL as source/destination of data and modidy the `R` code create
+Dataframes out of queries []
+2. Add cluster configurations when creating a `Spark` session in `R` to ensure
+high performance on the server side! []
+3. Add diagram of how this looks stack looks/operates []
+4. Add `bash` script to clean up Gcloud after the project on user command []
