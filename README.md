@@ -94,7 +94,7 @@ Start the server:
 
 **IMPORTANT**: If idle for 1 hour, the server will automatically shutdown.
 Run the above command again to re-deploy the server. The amount of idle time
-before shutdown is defined by `SHUTDOWN_AFTER` in `./3_deploy_gcloud_server.sh`.
+before shutdown is defined by `SHUTDOWN_AFTER` in `./0_set_gcloud_env.sh`.
 
 ## Submitting Jobs to Gcloud
 
