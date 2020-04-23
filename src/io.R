@@ -5,30 +5,31 @@
 #         mario.lr@kaist.ac.kr
 # ------------------------------------------------------------------------------
 
-# library(sparklyr) # needed for `spark_write_csv()`
+library(sparklyr)
 
-load_csv <-function(filename, distributed=FALSE){
+load_csv <-function(filename){
   # Load a .csv file as local dataframe or distributed dataframe
 
   df <- as.data.frame(read.csv(filename, sep = ","))
-
-  if(distributed){
-    print("INFO - Converting local dataframe to distributed dataframe...")
-    distributed_df <- createDataFrame(df)
-    return(distributed_df)
-  } else {
-    return(df)
-  }
+  return(df)
 }
 
-export_csv <-function(df, filename){
+load_distributed_csv <- function(filename, sc, name=NULL) {
+  # Load a .csv file into a distributed dataframe
+  df <- spark_read_csv(sc, name=name, path=filename)
+  
+  return(df)
+}
+
+export_csv <-function(df, filename) {
   # Export a local dataframe as a .csv file
 
   write.csv(df, filename, row.names=FALSE)
 }
 
-export_parquet <-function(df, filename){
-  # Export a distributed dataframe as a .parquet file
+export_distributed_csv <- function(df, filename) {
+  # Export a distributed dataframe as a .csv file
 
-  write.df(df, filename)
+  # TODO: Find a way to prevent Spark from wriing the output in file pieces
+  spark_write_csv(df, filename)
 }
