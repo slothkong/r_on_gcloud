@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ################################################################################
-# Gcloud projet creation and Spark server deployment.
+# Gcloud server (Spark server) creation
 #
 # Author: Mario Loaiciga
 #         mario.lr@kaist.ac.kr
@@ -14,24 +14,8 @@ WORKES=2 # number of nodes on the Gcloud Server (Spark Server workes)
 SHUTDOWN_AFTER=3600 # will shutdown if idle for SHUTDOWN_AFTER secs
 
 
-no_project_exists=$(gcloud projects list | grep -w $PROJECT_ID)
-
-if [ -z "$no_project_exists" ]
-then
-
-  # Create a new projet in Google Cloud Platform.
-  gcloud projects create $PROJECT_ID --set-as-default
-
-  # Create Cloud Storage bucket for the input/output data.
-  gsutil mb -l $REGION gs://$PROJECT_ID-bucket
-
-  # Upload data to Cloud Storage bucket
-  gsutil -m  rsync -r data gs://$PROJECT_ID-bucket/data
-
-  # Copy the bash script to install R libs on the server.
-  gsutil cp install_r_libs.sh  gs://$PROJECT_ID-bucket/init/install_r_libs.sh
-
-fi
+# Copy the bash script to install R libs on the server.
+gsutil cp 0_install_r_libs.sh  gs://$PROJECT_ID-bucket/init/0_install_r_libs.sh
 
 # Start a new Gcloud Server (Spark Server)
 # NOTE: Server will shutdown if idle for SHUTDOWN_AFTER secs
@@ -42,4 +26,4 @@ gcloud dataproc clusters create $PROJECT_ID-cluster \
 --image-version 1.5-ubuntu18 \
 --max-idle ${SHUTDOWN_AFTER}s \
 --scopes "https://www.googleapis.com/auth/cloud-platform" \
---initialization-actions "gs://"${PROJECT_ID}"-bucket/init/install_r_libs.sh"
+--initialization-actions "gs://"${PROJECT_ID}"-bucket/init/0_install_r_libs.sh"
