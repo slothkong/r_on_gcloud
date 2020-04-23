@@ -8,14 +8,13 @@
 ################################################################################
 
 # Declare Google Cloud Platform project specifications.
-PROJECT_ID=rongcloud # project name
-REGION=europe-west1 # data center in Belgium
+source 0_set_gcloud_env.sh
 
 # Copy source code to Gcloud Storage
-gsutil -m rsync -r src gs://$PROJECT_ID-bucket/src
+gsutil -m rsync -r src gs://$BUCKET_NAME/src
 
 # Submit a job to the Gcloud server (Spark server)
-gcloud dataproc jobs submit spark-r gs://$PROJECT_ID-bucket/src/main.R \
---cluster $PROJECT_ID-cluster \
+gcloud dataproc jobs submit spark-r gs://$BUCKET_NAME/src/main.R \
+--cluster $CLUSTER_NAME \
 --region $REGION \
---files "gs://$PROJECT_ID-bucket/src/config.R","gs://$PROJECT_ID-bucket/src/env.R","gs://$PROJECT_ID-bucket/src/io.R","gs://$PROJECT_ID-bucket/src/subroutines.R"
+--files "gs://$BUCKET_NAME/src/config.R","gs://$BUCKET_NAME/src/env.R","gs://$BUCKET_NAME/src/io.R","gs://$BUCKET_NAME/src/subroutines.R" \

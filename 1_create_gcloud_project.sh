@@ -8,8 +8,7 @@
 ################################################################################
 
 # Declare Google Cloud Platform project specifications.
-PROJECT_ID=rongcloud # project name
-REGION=europe-west1 # data center in Belgium
+source 0_set_gcloud_env.sh
 
 project_exists=$(gcloud projects list | grep -w $PROJECT_ID)
 
