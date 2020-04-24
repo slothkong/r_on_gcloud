@@ -8,11 +8,11 @@
 ################################################################################
 
 # Declare Google Cloud Platform project specifications.
-PROJECT_ID=rongcloud # project name
-REGION=europe-west1 # data center in Belgium
-CLUSTER_NAME="$PROJECT_ID-cluster" # Dataproc cluster name
-BUCKET_NAME="$PROJECT_ID-bucket" # Cloud Storage bucket name
-WORKES=2 # number of nodes on the Gcloud Server (Spark Server workes)
-SHUTDOWN_AFTER=3600 # will shutdown if idle for specified time
-MASTER_TYPE=n1-standard-4 # `standard-4` for 4vCPU/15GB memory 
-WORKER_TYPE=n1-standard-4 # `standard-8` for 8vCPU/30GB memory  
+export PROJECT_ID=rongcloud # project name
+export REGION=europe-west1 # data center in Belgium
+export CLUSTER_NAME="$PROJECT_ID-cluster" # Dataproc cluster name
+export BUCKET_NAME="$PROJECT_ID-bucket" # Cloud Storage bucket name
+export WORKES=2 # number of nodes on the Gcloud Server (Spark Server workes)
+export SHUTDOWN_AFTER=3600 # will SHUTDOWN_AFTER if idle for specified time
+export MACHINE_TYPE=n1-standard-8 # 8vCPU 30 GB memory
+export DISTRO=1.3-debian9 # Debian 9, Hadoop 2.9, Spark 2.3
