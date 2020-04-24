@@ -6,7 +6,7 @@
 # ------------------------------------------------------------------------------
 
 DEBUG = TRUE # to easily turn on/off the print statements
-DISTRIBUTED = TRUE # to select either to run locally or on Gcloud Spark Server
+DISTRIBUTED = FALSE # to select either to run locally or on Gcloud Spark Server
 
 if(DISTRIBUTED) {
   INPUT_FILENAME = "gs://rongcloud-bucket/data/ratings_sample.csv" # path to input data
