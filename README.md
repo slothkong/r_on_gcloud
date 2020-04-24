@@ -248,5 +248,5 @@ the results.
 Dataframes out of queries []
 2. Add cluster configurations when creating a `Spark` session in `R` to ensure
 high performance on the server side! [X]
-3. Add diagram of how this looks stack looks/operates []
+3. Add diagram of how this looks stack looks/operates [X]
 4. Add `bash` script to clean up Gcloud after the project on user command []
