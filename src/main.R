@@ -11,9 +11,11 @@ source("env.R")
 source("subroutines.R")
 
 if(DISTRIBUTED) {
-  declare_libs_path(SPARK_LIB_PATH)
+  declare_spark_lib_path(SPARK_LIB_PATH)
   library(sparklyr)
-  sc <- spark_connect(master = SERVER_IP)
+  sc_config <-spark_config()
+  sc_config <- update_spark_connection_config(sc_config)
+  sc <- spark_connect(master="local", config=sc_config)
 }
 
 # Data loading
@@ -21,10 +23,10 @@ start_time <- Sys.time()
 print("INFO - Loading data...")
 if(DISTRIBUTED) {
   ratings_df = load_distributed_csv(INPUT_FILENAME, sc, "ratings")
-  
+
 } else {
   ratings_df = load_csv(INPUT_FILENAME)
-  
+
 }
 
 # Data processing
@@ -41,7 +43,7 @@ if(DISTRIBUTED) {
 
 } else {
   export_csv(mean_ratings_df, OUTPUT_FILENAME)
-  
+
 }
 
 end_time <- Sys.time()
