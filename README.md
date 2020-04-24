@@ -10,6 +10,8 @@ in this example can be summarized as:
 Google's managed offering for `Hadoop` and `Spark` distributed computation at
 scale.
 
+![](README.resources/system_diagram.png)
+
 The example `R` source code here provided reads `.csv` data containing movies
 and user ratings, computes the average ratings for each movie, sorts them up,
 and exports the result to a new file.
@@ -24,7 +26,7 @@ necessary steps for the stack to operate.
 I highly recommend watching [Nathan Stephens's talk in Spark Summit](https://www.youtube.com/watch?v=oItFZfzqqMY)
 to get a the big picture of what  `SparkR` and `sparklyr` libraries have to
 offer. Make sure to also checkout [this Google Cloud Labs video](https://www.youtube.com/watch?v=h1LvACJWjKc&feature=emb_logo)
-to start off with `Google Dataproc`.
+to start off with Gcloud Dataproc.
 
 All `R` and `bash` scrips were developed/tested on:
 * `Debian 9` and `Ubuntu  16.04`
@@ -64,7 +66,7 @@ The following command takes care for installing the user-specified libs:
 ```
 **NOTE**: If later on the projects depends on new libraries, make sure to
 add them to `0_install_r_libs.sh` as this file will also be used to install
-libraries on the remote Gcloud server (Spark server).
+libraries on the remote Gcloud server (`Spark` server).
 
 ### 1. Create a new Gcloud project
 
@@ -106,12 +108,16 @@ before shutdown is defined by `SHUTDOWN_AFTER` in `./0_set_gcloud_env.sh`.
 ## Submitting Jobs to Gcloud
 
 The provided `bash` script will upload the content
-of the `src/` directory to `Gcloud Storage` and requests the server (Spark
+of the `src/` directory to Gcloud Storage and requests the server (`Spark`
 server) to execute it:
 
 ```bash
 ./4_submit_gcloud_job.sh
 ```
+
+**IMPORTANT**: Before submitting the job, make sure to set `DISTRIBUTED`
+to `TRUE` in `config.R`. This is required to star R on the `Spark` environment
+and to fetch the dataset from the cloud storage.
 
 The terminal should display the status of the job as well as the print
 statements of the `R` code. If for example we process `raitings_sample.csv` we
@@ -170,7 +176,7 @@ On Gcloud the [Gcloud Console](https://console.cloud.google.com), you will see t
 
 ![](README.resources/jobs.png)
 
-The resulting file of the execution will be located in the `Gcloud Storage` bucket we created previously:
+The resulting file of the execution will be located in the Gcloud Storage bucket we created previously:
 
 ![](README.resources/results.png)
 
@@ -202,9 +208,9 @@ or not to print debug messages.
 
 ## Testing
 
-The project also includes an example unittest for the
-`subroutines.compute_mean_ratings()` function. To verify that all
-unittest under the `scr/tests/` directory are passing, you can run:
+The project also includes an example unittest for fucntions in `subroutines.R`.
+To verify that all unittest defined under the `scr/tests/` directory are passing,
+you can run:
 
 ```bash
 ./0_run_uittests.sh
