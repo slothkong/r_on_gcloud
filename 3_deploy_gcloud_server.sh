@@ -17,8 +17,8 @@ gsutil cp 0_install_r_libs.sh  gs://$BUCKET_NAME/0_install_r_libs.sh
 # NOTE: Server will shutdown if idle for SHUTDOWN_AFTER secs
 gcloud dataproc clusters create $CLUSTER_NAME \
 --project $PROJECT_ID --region $REGION --subnet default --zone  $REGION-d \
---master-machine-type n1-standard-2 --master-boot-disk-size 500 \
---num-workers $WORKES --worker-machine-type n1-standard-2 --worker-boot-disk-size 500 --num-worker-local-ssds 1 \
+--master-machine-type $MASTER_TYPE --master-boot-disk-size 500 \
+--num-workers $WORKES --worker-machine-type $WORKER_TYPE --worker-boot-disk-size 500 --num-worker-local-ssds 1 \
 --image-version 1.5-ubuntu18 \
 --max-idle ${SHUTDOWN_AFTER}s \
 --scopes "https://www.googleapis.com/auth/cloud-platform" \
