@@ -6,7 +6,7 @@ This little project is aimed at those looking to start learning how to run R
 workloads at scale on cloud servers. Specifically, the stack we utilize
 in this example can be summarized as:
 
-    R  + sparklyr + Gcloud Dataproc + Gcloud Storage  
+    R  + sparklyr + Apache Spark + Gcloud Dataproc + Gcloud Storage  
 
 [Google Dataproc](https://cloud.google.com/dataproc/) is
 Google's managed offering for `Hadoop` and `Spark` distributed computation at
