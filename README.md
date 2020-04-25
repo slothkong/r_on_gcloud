@@ -1,24 +1,26 @@
 # R on Gcloud
 
+![](README.resources/r_on_gcloud_diagram.png)
+
 This little project is aimed at those looking to start learning how to run R
 workloads at scale on cloud servers. Specifically, the stack we utilize
 in this example can be summarized as:
 
-    R  + SparkR + sparklyr + Gcloud Dataproc + Gcloud Storage  
+    R  + sparklyr + Gcloud Dataproc + Gcloud Storage  
 
 [Google Dataproc](https://cloud.google.com/dataproc/) is
 Google's managed offering for `Hadoop` and `Spark` distributed computation at
 scale.
 
-![](README.resources/system_diagram.png)
-
 The example `R` source code here provided reads `.csv` data containing movies
 and user ratings, computes the average ratings for each movie, sorts them up,
 and exports the result to a new file.
 
+![](README.resources/R_example.png)
+
 **IMPORTANT**: `R` source code works both locally and on the cloud.
 
-Additionally, this project includes a series of `bash` scripts that automate the
+The project includes also a series of `bash` scripts that automate the
 setup and deployment of jobs to the Gcloud servers. Scrips are full of comments
 that will hopefully guide you if you would like to know what exactly are the
 necessary steps for the stack to operate.
